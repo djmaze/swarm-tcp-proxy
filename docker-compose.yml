@@ -1,0 +1,23 @@
+version: "3.3"
+
+services:
+  proxy:
+    build: .
+    image: decentralize/swarm-tcp-proxy
+    environment:
+      SERVICE_NAME: app
+      SERVICE_PORT: 8080
+    ports:
+      - "8000:8000"
+    networks:
+      - backend
+    deploy:
+      mode: global
+
+  app:
+    image: decentralize/proxy-responder
+    networks:
+      - backend
+
+networks:
+  backend:
