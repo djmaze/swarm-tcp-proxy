@@ -44,3 +44,4 @@ It is configured through ENV variables which are mandatory:
 
 * `SERVICE_NAME`: name of the connected Swarm service
 * `SERVICE_PORT`: port on the service which should be proxied
+* `DISABLE_PROXY_PROTOCOL`: do not use the proxy protocol (just forward data)
