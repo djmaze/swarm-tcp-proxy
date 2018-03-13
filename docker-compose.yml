@@ -7,6 +7,7 @@ services:
     environment:
       SERVICE_NAME: app
       SERVICE_PORT: 8080
+      CONNECTION_TIMEOUT: 5m
     ports:
       - target: 8000
         published: 8000
