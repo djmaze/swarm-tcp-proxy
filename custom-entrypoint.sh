@@ -9,17 +9,21 @@ DISABLE_PROXY_PROTOCOL="${DISABLE_PROXY_PROTOCOL:-}"
 CONNECTION_TIMEOUT="${CONNECTION_TIMEOUT:-}"
 
 if [[ -n "$SERVICES" ]]; then
+  num=0
   for service in $SERVICES; do
+    let "num++" || true
     name="$(echo $service | cut -d ":" -f 1)"
     port="$(echo $service | cut -d ":" -f 2)"
-    sed "s/\${PROXY_PORT}/${port}/; \
-        s/\${SERVICE_NAME}/${name}/; \
-        s/\${SERVICE_PORT}/${port}/; \
-        s/\${CONNECTION_TIMEOUT}/${CONNECTION_TIMEOUT}/g" \
-        "$haproxy_cfg.tpl" >>"$haproxy_cfg"
+    sed "s/\${NUM}/${num}/; \
+         s/\${PROXY_PORT}/${port}/; \
+         s/\${SERVICE_NAME}/${name}/; \
+         s/\${SERVICE_PORT}/${port}/; \
+         s/\${CONNECTION_TIMEOUT}/${CONNECTION_TIMEOUT}/g" \
+         "$haproxy_cfg.tpl" >>"$haproxy_cfg"
   done
 else
-  sed "s/\${PROXY_PORT}/8000/; \
+  sed "s/\${NUM}/1/; \
+       s/\${PROXY_PORT}/8000/; \
        s/\${SERVICE_NAME}/${SERVICE_NAME}/; \
        s/\${SERVICE_PORT}/${SERVICE_PORT}/; \
        s/\${CONNECTION_TIMEOUT}/${CONNECTION_TIMEOUT}/g" \
