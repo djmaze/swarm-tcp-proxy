@@ -38,11 +38,25 @@ Example output:
     Hello, 192.168.80.1:37174
     Connection closed by foreign host.
 
-The proxy itself runs on port 8000.
+The example proxy runs on port 8080.
 
-It is configured through ENV variables which are mandatory:
+### Configuration
+
+The proxy is able to front multiple backend services listening at different addresses. It is configured through some mandatory ENV variables:
+
+* `SERVICES`: a list of `<SERVICE>:<PORT>` combinations which should be proxied, separated by spaces
+
+The proxy will listen on the same port as each given service.
+
+Other settings:
+
+* `DISABLE_PROXY_PROTOCOL`: do not use the proxy protocol (just forward data)
+* `CONNECTION_TIMEOUT`: connection timeout to client as well as server (default: "5m")
+
+### Deprecated syntax
+
+With the deprecated syntax, the proxy will front a single service while listening on port `8000`.
 
 * `SERVICE_NAME`: name of the connected Swarm service
 * `SERVICE_PORT`: port on the service which should be proxied
-* `DISABLE_PROXY_PROTOCOL`: do not use the proxy protocol (just forward data)
-* `CONNECTION_TIMEOUT`: connection timeout to client as well as server (default: "5m")
+

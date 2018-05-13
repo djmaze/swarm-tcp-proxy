@@ -5,12 +5,11 @@ services:
     build: .
     image: decentralize/swarm-tcp-proxy
     environment:
-      SERVICE_NAME: app
-      SERVICE_PORT: 8080
+      SERVICES: "app:8080"
       CONNECTION_TIMEOUT: 5m
     ports:
-      - target: 8000
-        published: 8000
+      - target: 8080
+        published: 8080
         protocol: tcp
         mode: host
     networks:
